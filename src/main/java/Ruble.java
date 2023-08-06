@@ -2,7 +2,6 @@ public class Ruble {
     public String ending (double amount) {
         int integerPart = (int) amount;
 
-        String integerPartString = Integer.toString(integerPart);
         String currency = "рубл";
 
         if (integerPart % 10 == 1 && integerPart % 100 != 11) {
@@ -13,6 +12,6 @@ public class Ruble {
             currency += "ей";
         }
 
-        return integerPartString + " " + currency;
+        return currency;
     }
 }

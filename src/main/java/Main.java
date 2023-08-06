@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -7,7 +8,7 @@ public class Main {
 
         while (true) {
             Scanner scanner = new Scanner(System.in);
-            if (scanner.hasNextInt()) {
+            try {
                 numberOfPerson = scanner.nextInt();
                 if (numberOfPerson == 1) {
                     System.out.println("Нет смысла делить счёт - оплатите его сами");
@@ -17,26 +18,39 @@ public class Main {
                 } else if (numberOfPerson < 1) {
                     System.out.println("Это некорректное число - введите число человек снова");
                 }
+            } catch (InputMismatchException e) {
+                System.out.println("Вы ввели некорректное значение. Попробуйте снова");
             }
         }
         while (true) {
             double totalPrice = 0;
             String productList = "";
             Scanner scanner = new Scanner(System.in);
-            System.out.print("Введите название товара\nили \"Завершить\" в случае завершения: ");
+            System.out.println("Введите название товара\nили \"Завершить\" в случае завершения: ");
             String productName = scanner.nextLine();
 
-            while(!productName.equalsIgnoreCase("Завершить")) {
-                System.out.print("Введите стоимость товара: ");
-                double productPrice = scanner.nextDouble();
-
-                if (productPrice > 0) {
-                    Product product = new Product(productName, productPrice);
-                    totalPrice += productPrice;
-                    productList += product.nameProduct + ", ";
-                }
-                System.out.print("Введите название товара\nили \"Завершить\" в случае завершения: ");
-                productName = scanner.next();
+                while(!productName.equalsIgnoreCase("Завершить")) {
+                    if (productName.isEmpty()) {
+                        System.out.println("Название товара не может быть пустым! Заполните поле: ");
+                    } else {
+                        System.out.print("Введите стоимость товара: ");
+                        double productPrice;
+                        try {
+                            productPrice = scanner.nextDouble();
+                            if (productPrice > 0) {
+                                Product product = new Product(productName, productPrice);
+                                totalPrice += productPrice;
+                                productList += product.nameProduct + ", ";
+                            } else {
+                                System.out.println("Стоимость товара должна быть\nположительным числом. Заполните снова: ");
+                            }
+                        } catch (InputMismatchException e) {
+                            System.out.println("Вы ввели некорректное значение. Попробуйте снова: ");
+                            scanner.nextLine();
+                        }
+                    }
+                System.out.println("Введите название товара\nили \"Завершить\" в случае завершения: ");
+                    productName = scanner.next();
             }
             System.out.println("Добавленные продукты: " + productList);
 
@@ -48,6 +62,5 @@ public class Main {
             System.out.println(String.format(conclusion, amountPerPerson, ending.ending(amountPerPerson)));
             break;
         }
-
     }
 }
