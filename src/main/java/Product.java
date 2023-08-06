@@ -6,4 +6,4 @@ public class Product {
         this.nameProduct = nameProduct;
         this.priceProduct = priceProduct;
     }
-    }
+}

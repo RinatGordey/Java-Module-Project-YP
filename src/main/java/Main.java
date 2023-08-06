@@ -12,11 +12,9 @@ public class Main {
                 if (numberOfPerson == 1) {
                     System.out.println("Нет смысла делить счёт - оплатите его сами");
                     break;
-                }
-                if (numberOfPerson > 1) {
+                } else if (numberOfPerson > 1) {
                     break;
-                }
-                if (numberOfPerson < 1) {
+                } else if (numberOfPerson < 1) {
                     System.out.println("Это некорректное число - введите число человек снова");
                 }
             }
